@@ -1,0 +1,12 @@
+[submodule "ms-emprestimo"]
+	path = ms-emprestimo
+	url = https://github.com/luizfilipebp/ms-emprestimo
+[submodule "ms-livros"]
+	path = ms-livros
+	url = https://github.com/luizfilipebp/ms-livros
+[submodule "ms-usuarios"]
+	path = ms-usuarios
+	url = https://github.com/luizfilipebp/ms-usuarios
+[submodule "msdiscovery"]
+	path = msdiscovery
+	url = https://github.com/luizfilipebp/msdiscovery
