@@ -26,7 +26,7 @@ Certifique-se de ter as seguintes ferramentas instaladas:
 1. Clone este repositório:
    ```bash
    git clone https://github.com/luizfilipebp/TechChallenge2Subs
-   cd sistema-biblioteca
+   cd techchallenge2subs
 
 ## Estrutura de Diretórios
 
