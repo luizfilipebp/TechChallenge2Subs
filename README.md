@@ -25,7 +25,7 @@ Certifique-se de ter as seguintes ferramentas instaladas:
 
 1. Clone este repositório:
    ```bash
-   git clone https://github.com/luizfilipebp/sistema-biblioteca.git
+   git clone https://github.com/luizfilipebp/TechChallenge2Subs
    cd sistema-biblioteca
 
 ## Estrutura de Diretórios
