@@ -1,0 +1,109 @@
+version: '3.8'
+
+services:
+  ms-discovery:
+    build:
+      context: ./msdiscovery
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://0.0.0.0:8761/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ms-emprestimo:
+    build:
+      context: ./ms-emprestimo
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db-emprestimo:5432/emprestimo
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      - ms-discovery
+      - db-emprestimo
+
+  db-emprestimo:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: emprestimos
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_emprestimo_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U root" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ms-livros:
+    build:
+      context: ./ms-livros
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db-livros:5432/livros
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      - ms-discovery
+      - db-livros
+
+  db-livros:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: livros
+    ports:
+      - "5433:5432"
+    volumes:
+      - db_livros_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U root" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ms-usuarios:
+    build:
+      context: ./ms-usuarios
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db-usuarios:5432/usuarios
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      - ms-discovery
+      - db-usuarios
+
+  db-usuarios:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: usuarios
+    ports:
+      - "5434:5432"
+    volumes:
+      - db_usuarios_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U root" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db_emprestimo_data:
+  db_livros_data:
+  db_usuarios_data:
